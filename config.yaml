@@ -1,0 +1,54 @@
+# OmniCoreX Configuration File
+
+model:
+  name: "OmniCoreX"
+  architecture:
+    embed_dim: 768
+    num_layers: 24
+    num_heads: 12
+    dropout: 0.1
+  streams:
+    text: 128
+    image: 256
+    sensor: 64
+  output_dim: 768
+
+data:
+  metadata_path: "./data/metadata.json"
+  modalities:
+    - text
+    - image
+    - sensor
+  text_max_length: 256
+  image_size: [224, 224]
+  sensor_max_length: 100
+  batch_size: 16
+  num_workers: 4
+  augmentation: true
+  shuffle: true
+
+training:
+  epochs: 10
+  learning_rate: 5e-5
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  accumulation_steps: 2
+  total_steps: 100000
+  warmup_steps: 1000
+  checkpoint_interval: 1000
+  validate_interval: 1000
+  device: "cuda"  # or "cpu"
+  mixed_precision: true
+  save_dir: "./checkpoints"
+
+inference:
+  max_context_length: 512
+  max_response_length: 128
+  streaming_timeout: 2.0
+  batch_size: 1
+
+logging:
+  level: "INFO"
+  log_file: "./logs/omnicorex.log"
+
+seed: 42
